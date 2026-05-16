@@ -1,4 +1,4 @@
-PHONY: build run format all
+.PHONY: build run format all
 
 build:
 	gcc src/*.c -o main

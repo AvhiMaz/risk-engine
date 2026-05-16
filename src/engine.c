@@ -12,7 +12,7 @@ void engine_init(RiskEngine *engine) {
     engine->market_count = 0;
     engine->market_cap = 64;
 
-    engine->liq_queue = malloc(256 * sizeof(Position *));
+    engine->liq_queue = malloc(256 * sizeof(uint32_t));
     engine->liq_queue_count = 0;
     engine->liq_queue_cap = 256;
 }
@@ -26,6 +26,8 @@ void engine_add_position(RiskEngine *engine, Position *position) {
     engine->positions[engine->position_count] = *position;
     engine->position_count++;
 
+    if (position->market_index >= engine->market_count)
+        return;
     Market *market = &engine->markets[position->market_index];
     if (position->side == LONG) {
         market->long_open_interest += position->size;

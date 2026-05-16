@@ -4,12 +4,11 @@
 #include <stdio.h>
 
 void liquidator(RiskEngine *engine) {
-
     while (engine->liq_queue_count > 0) {
+        uint32_t  idx = engine->liq_queue[0];
+        Position *pos = &engine->positions[idx];
 
-        Position *pos = engine->liq_queue[0];
-
-        printf("liquidating trader: market %u size %" PRIu64 "",
+        printf("liquidating trader: market %u size %" PRIu64 "\n",
                pos->market_index, pos->size);
 
         pos->state = CLOSED;
