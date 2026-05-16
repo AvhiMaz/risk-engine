@@ -19,4 +19,6 @@ typedef struct {
     uint32_t   liq_queue_cap;
 } RiskEngine;
 
+void engine_init(RiskEngine *engine);
+
 #endif
