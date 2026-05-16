@@ -33,3 +33,14 @@ void engine_add_position(RiskEngine *engine, Position *position) {
         market->short_open_interest += position->size;
     }
 }
+
+void engine_add_market(RiskEngine *engine, Market *market) {
+    if (engine->market_count == engine->market_cap) {
+        engine->market_cap *= 2;
+        engine->markets =
+            realloc(engine->markets, engine->market_cap * sizeof(Market));
+    }
+
+    engine->markets[engine->market_count] = *market;
+    engine->market_count++;
+}

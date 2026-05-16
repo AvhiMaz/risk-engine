@@ -21,5 +21,6 @@ typedef struct {
 
 void engine_init(RiskEngine *engine);
 void engine_add_position(RiskEngine *engine, Position *position);
+void engine_add_market(RiskEngine *engine, Market *market);
 
 #endif
