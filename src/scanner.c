@@ -29,7 +29,7 @@ void scanner(RiskEngine *engine) {
             (int64_t)market->mark_price * (int64_t)pos->size;
         int64_t health = (equity * 100) / position_value;
 
-        if (health < market->config.maintenance_margin_rate) {
+        if (health < (int64_t)market->config.maintenance_margin_rate) {
             pos->state = LIQUIDATING;
 
             if (engine->liq_queue_count == engine->liq_queue_cap) {
