@@ -7,7 +7,10 @@ run:
 	./main
 
 format:
-	clang-format -i src/*.c
+	clang-format -i src/*.c src/*.h
+
+link:
+	bear -- make build
 
 all:
 	make format && make build && make run
