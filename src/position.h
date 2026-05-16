@@ -1,3 +1,6 @@
+#ifndef POSITION_H
+#define POSITION_H
+
 #include <stdint.h>
 
 enum Side { LONG, SHORT };
@@ -15,3 +18,5 @@ typedef struct {
     uint64_t   opened_at;
     enum State state;
 } Position;
+
+#endif
