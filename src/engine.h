@@ -20,5 +20,6 @@ typedef struct {
 } RiskEngine;
 
 void engine_init(RiskEngine *engine);
+void engine_add_position(RiskEngine *engine, Position *position);
 
 #endif
