@@ -1,7 +1,7 @@
 PHONY: build run format all
 
 build:
-	gcc src/main.c src/engine.c -o main
+	gcc src/main.c src/engine.c src/scanner.c -o main
 
 run:
 	./main
