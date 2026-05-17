@@ -4,6 +4,10 @@
 #include <stdlib.h>
 
 void engine_init(RiskEngine *engine) {
+    pthread_mutex_init(&engine->lock, NULL);
+    pthread_cond_init(&engine->price_cond, NULL);
+    pthread_cond_init(&engine->liq_cond, NULL);
+
     engine->positions = malloc(1000 * sizeof(Position));
     engine->position_count = 0;
     engine->position_cap = 1000;

@@ -9,12 +9,15 @@ int main() {
     RiskEngine engine;
     engine_init(&engine);
 
-    Market sol_perp = {.market_index = 0,
-                       .mark_price = 100,
-                       .config = {.market_index = 0,
-                                  .initial_margin_rate = 10,
-                                  .maintenance_margin_rate = 5,
-                                  .max_leverage = 20}};
+    pthread_t scanner_thread;
+    pthread_t liquidator_thread;
+
+    Market    sol_perp = {.market_index = 0,
+                          .mark_price = 100,
+                          .config = {.market_index = 0,
+                                     .initial_margin_rate = 10,
+                                     .maintenance_margin_rate = 5,
+                                     .max_leverage = 20}};
 
     engine_add_market(&engine, &sol_perp);
 
@@ -30,9 +33,11 @@ int main() {
 
     engine_add_position(&engine, &pos);
 
-    scanner(&engine);
-    printf("liq_queue_count: %u\n", engine.liq_queue_count);
-    liquidator(&engine);
+    pthread_create(&scanner_thread, NULL, scanner, &engine);
+    pthread_create(&liquidator_thread, NULL, liquidator, &engine);
+
+    pthread_join(scanner_thread, NULL);
+    pthread_join(liquidator_thread, NULL);
 
     return 0;
 }
