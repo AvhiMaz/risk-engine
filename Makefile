@@ -1,7 +1,7 @@
 .PHONY: build run format all
 
 build:
-	gcc src/*.c -o main
+	gcc src/*.c -o main -lpthread -L/opt/homebrew/opt/libwebsockets/lib -I/opt/homebrew/opt/libwebsockets/include -lwebsockets -L/opt/homebrew/opt/openssl@3/lib -I/opt/homebrew/opt/openssl@3/include -lssl -lcrypto
 
 run:
 	./main

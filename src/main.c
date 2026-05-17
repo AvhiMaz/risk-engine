@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "feed.h"
 #include "liquidator.h"
 #include "market.h"
 #include "position.h"
@@ -11,6 +12,7 @@ int main() {
 
     pthread_t scanner_thread;
     pthread_t liquidator_thread;
+    pthread_t feed_thread;
 
     Market    sol_perp = {.market_index = 0,
                           .mark_price = 100,
@@ -35,9 +37,11 @@ int main() {
 
     pthread_create(&scanner_thread, NULL, scanner, &engine);
     pthread_create(&liquidator_thread, NULL, liquidator, &engine);
+    pthread_create(&feed_thread, NULL, feed, &engine);
 
     pthread_join(scanner_thread, NULL);
     pthread_join(liquidator_thread, NULL);
+    pthread_join(feed_thread, NULL);
 
     return 0;
 }
