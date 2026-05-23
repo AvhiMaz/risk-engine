@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all build clean link
 
 PROGRAM   := perps
 SRC_DIR   := src
@@ -24,6 +24,11 @@ $(SO): $(OBJS)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CLANG) $(CFLAGS) -c $< -o $@
+
+build: all
+
+link:
+	bear -- make all
 
 clean:
 	rm -rf $(BUILD_DIR)

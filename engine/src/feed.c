@@ -1,4 +1,4 @@
-#include "../thirdparty/cjson/cJSON.h"
+#include "../../thirdparty/cjson/cJSON.h"
 #include "engine.h"
 #include <libwebsockets.h>
 #include <stdio.h>
