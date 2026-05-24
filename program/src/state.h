@@ -1,7 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <caravel.h>
+#include "../../thirdparty/caravel/caravel.h"
 
 typedef struct {
     Pubkey   trader;
