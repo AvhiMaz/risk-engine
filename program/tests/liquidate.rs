@@ -20,11 +20,11 @@ fn setup_position(mollusk: &Mollusk, trader: &Pubkey) -> (Pubkey, AccountSharedD
         &PROGRAM_ID,
     );
 
-    let mut data = vec![0u8]; // open_position discriminator
-    data.extend_from_slice(&100u64.to_le_bytes()); // entry_price = 100
-    data.extend_from_slice(&10u64.to_le_bytes());  // size = 10
-    data.extend_from_slice(&50u64.to_le_bytes());  // margin = 50
-    data.push(0u8);                                // side = LONG
+    let mut data = vec![0u8];
+    data.extend_from_slice(&100u64.to_le_bytes());
+    data.extend_from_slice(&10u64.to_le_bytes());
+    data.extend_from_slice(&50u64.to_le_bytes());
+    data.push(0u8);
     data.extend_from_slice(&market_index.to_le_bytes());
     data.extend_from_slice(&nonce.to_le_bytes());
 
@@ -69,11 +69,9 @@ fn test_liquidate_position() {
 
     let (position, position_account) = setup_position(&mollusk, &trader);
 
-    // liquidation_price = entry_price - (margin / size) = 100 - (50/10) = 95
-    // mark_price = 90 < 95 → underwater → should liquidate
     let mark_price: u64 = 90;
 
-    let mut data = vec![1u8]; // liquidate_position discriminator
+    let mut data = vec![1u8];
     data.extend_from_slice(&mark_price.to_le_bytes());
 
     let ix = Instruction::new_with_bytes(
@@ -100,7 +98,6 @@ fn test_liquidate_position() {
 
     assert!(!result.program_result.is_err(), "liquidate_position failed");
 
-    // Pubkey(32) + entry_price(8) + size(8) + margin(8) + liquidation_price(8) + side(1) = 65
     let pos_data = result
         .get_account(&position)
         .expect("position account missing")
