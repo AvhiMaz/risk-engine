@@ -1748,7 +1748,9 @@ name = "perps-tests"
 version = "0.1.0"
 dependencies = [
  "mollusk-svm",
- "solana-sdk",
+ "solana-account",
+ "solana-instruction",
+ "solana-pubkey",
 ]
 
 [[package]]

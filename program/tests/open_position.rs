@@ -1,12 +1,10 @@
 use mollusk_svm::Mollusk;
-use solana_sdk::{
-    account::AccountSharedData,
-    instruction::{AccountMeta, Instruction},
-    pubkey::Pubkey,
-    system_program,
-};
+use solana_account::AccountSharedData;
+use solana_instruction::{AccountMeta, Instruction};
+use solana_pubkey::Pubkey;
 
 const PROGRAM_ID: Pubkey = Pubkey::new_from_array([1u8; 32]);
+const SYSTEM_PROGRAM_ID: Pubkey = Pubkey::new_from_array([0u8; 32]);
 
 #[test]
 fn test_open_position() {
@@ -40,11 +38,11 @@ fn test_open_position() {
         vec![
             AccountMeta::new(trader, true),
             AccountMeta::new(position, false),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(SYSTEM_PROGRAM_ID, false),
         ],
     );
 
-    let trader_account = AccountSharedData::new(1_000_000_000, 0, &system_program::id());
+    let trader_account = AccountSharedData::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
     let position_account = AccountSharedData::default();
 
     let result = mollusk.process_instruction(
