@@ -9,8 +9,8 @@ typedef struct {
     uint64_t size;
     uint64_t margin;
     uint64_t liquidation_price;
-    uint8_t  side;  // 0 = LONG, 1 = SHORT
-    uint8_t  state; // 0 = OPEN, 1 = LIQUIDATING, 2 = CLOSED
+    uint8_t  side;
+    uint8_t  state;
     uint32_t market_index;
     uint64_t opened_at;
     uint64_t nonce;

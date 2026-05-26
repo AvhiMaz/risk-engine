@@ -1,5 +1,5 @@
 use mollusk_svm::Mollusk;
-use solana_account::AccountSharedData;
+use solana_account::Account;
 use solana_instruction::{AccountMeta, Instruction};
 use solana_pubkey::Pubkey;
 
@@ -14,7 +14,7 @@ fn test_open_position() {
     let market_index: u32 = 0;
     let nonce: u64 = 0;
 
-    let (position, _bump) = Pubkey::find_program_address(
+    let (position, bump) = Pubkey::find_program_address(
         &[
             b"position",
             trader.as_ref(),
@@ -31,6 +31,7 @@ fn test_open_position() {
     data.push(0u8);
     data.extend_from_slice(&market_index.to_le_bytes());
     data.extend_from_slice(&nonce.to_le_bytes());
+    data.push(bump);
 
     let instruction = Instruction::new_with_bytes(
         PROGRAM_ID,
@@ -42,8 +43,8 @@ fn test_open_position() {
         ],
     );
 
-    let trader_account = AccountSharedData::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
-    let position_account = AccountSharedData::default();
+    let trader_account = Account::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
+    let position_account = Account::default();
 
     let result = mollusk.process_instruction(
         &instruction,

@@ -6,6 +6,7 @@ LLD        ?= $(SOLANA_VER)/platform-tools/llvm/bin/ld.lld
 
 PROGRAM   := perps
 PROG_SRC  := $(shell find program/src -name '*.c')
+PROG_HDRS := $(shell find program/src -name '*.h') $(shell find thirdparty/caravel -name '*.h')
 PROG_OBJS := $(patsubst program/src/%.c, program/build/%.o, $(PROG_SRC))
 PROG_SO   := program/build/$(PROGRAM).so
 PROG_INC  := thirdparty/caravel
@@ -29,7 +30,7 @@ program: $(PROG_SO)
 $(PROG_SO): $(PROG_OBJS)
 	$(LLD) $(LDFLAGS) -o $@ $^
 
-program/build/%.o: program/src/%.c
+program/build/%.o: program/src/%.c $(PROG_HDRS)
 	@mkdir -p $(dir $@)
 	$(CLANG) $(CFLAGS) -c $< -o $@
 
