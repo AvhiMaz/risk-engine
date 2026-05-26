@@ -25,8 +25,7 @@ typedef struct __attribute__((packed)) {
 } liquidate_position_args_t;
 
 #define LIQUIDATE_POSITION_ACCOUNTS(X)                                         \
-    X(liquidator, SIGNER | WRITABLE)                                           \
-    X(trader, WRITABLE)                                                        \
+    X(liquidator, SIGNER)                                                      \
     X(position, WRITABLE)
 
 IX(1, liquidate_position, LIQUIDATE_POSITION_ACCOUNTS,

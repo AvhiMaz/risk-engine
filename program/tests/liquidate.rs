@@ -1,12 +1,12 @@
 use mollusk_svm::Mollusk;
-use solana_account::{AccountSharedData, ReadableAccount};
+use solana_account::Account;
 use solana_instruction::{AccountMeta, Instruction};
 use solana_pubkey::Pubkey;
 
 const PROGRAM_ID: Pubkey = Pubkey::new_from_array([1u8; 32]);
 const SYSTEM_PROGRAM_ID: Pubkey = Pubkey::new_from_array([0u8; 32]);
 
-fn setup_position(mollusk: &Mollusk, trader: &Pubkey) -> (Pubkey, AccountSharedData) {
+fn setup_position(mollusk: &Mollusk, trader: &Pubkey) -> (Pubkey, Account) {
     let market_index: u32 = 0;
     let nonce: u64 = 0;
 
@@ -38,8 +38,8 @@ fn setup_position(mollusk: &Mollusk, trader: &Pubkey) -> (Pubkey, AccountSharedD
         ],
     );
 
-    let trader_account = AccountSharedData::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
-    let position_account = AccountSharedData::default();
+    let trader_account = Account::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
+    let position_account = Account::default();
 
     let result = mollusk.process_instruction(
         &ix,
@@ -66,7 +66,6 @@ fn test_liquidate_position() {
 
     let trader = Pubkey::new_unique();
     let liquidator = Pubkey::new_unique();
-
     let (position, position_account) = setup_position(&mollusk, &trader);
 
     let mark_price: u64 = 90;
@@ -78,31 +77,27 @@ fn test_liquidate_position() {
         PROGRAM_ID,
         &data,
         vec![
-            AccountMeta::new(liquidator, true),
-            AccountMeta::new(trader, false),
+            AccountMeta::new_readonly(liquidator, true),
             AccountMeta::new(position, false),
         ],
     );
 
-    let liquidator_account = AccountSharedData::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
-    let trader_account = AccountSharedData::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
+    let liquidator_account = Account::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
 
     let result = mollusk.process_instruction(
         &ix,
         &[
             (liquidator, liquidator_account),
-            (trader, trader_account),
             (position, position_account),
         ],
     );
 
     assert!(!result.program_result.is_err(), "liquidate_position failed");
 
-    let pos_data = result
+    let pos_data = &result
         .get_account(&position)
         .expect("position account missing")
-        .data()
-        .to_vec();
+        .data;
 
     assert_eq!(pos_data[65], 2, "position state should be CLOSED (2)");
 }

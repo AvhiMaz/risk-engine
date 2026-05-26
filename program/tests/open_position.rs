@@ -1,5 +1,5 @@
 use mollusk_svm::Mollusk;
-use solana_account::AccountSharedData;
+use solana_account::Account;
 use solana_instruction::{AccountMeta, Instruction};
 use solana_pubkey::Pubkey;
 
@@ -42,8 +42,8 @@ fn test_open_position() {
         ],
     );
 
-    let trader_account = AccountSharedData::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
-    let position_account = AccountSharedData::default();
+    let trader_account = Account::new(1_000_000_000, 0, &SYSTEM_PROGRAM_ID);
+    let position_account = Account::default();
 
     let result = mollusk.process_instruction(
         &instruction,
