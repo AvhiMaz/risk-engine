@@ -10,7 +10,7 @@ typedef struct __attribute__((packed)) {
     uint64_t margin;
     uint8_t  side;
     uint32_t market_index;
-
+    uint64_t nonce;
 } open_position_args_t;
 
 #define OPEN_POSITION_ACCOUNTS(X)                                              \
