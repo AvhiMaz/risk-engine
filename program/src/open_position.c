@@ -53,6 +53,7 @@ uint64_t open_position(open_position_accounts_t *ctx,
     }
     state->opened_at = clock.unix_timestamp;
     state->market_index = args->market_index;
+    state->nonce = args->nonce;
     pubkey_cpy(&state->trader, ctx->trader->key);
 
     return SUCCESS;

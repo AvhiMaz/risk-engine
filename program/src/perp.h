@@ -20,7 +20,22 @@ typedef struct __attribute__((packed)) {
 
 IX(0, open_position, OPEN_POSITION_ACCOUNTS, open_position_args_t)
 
+typedef struct __attribute__((packed)) {
+    uint64_t mark_price;
+} liquidate_position_args_t;
+
+#define LIQUIDATE_POSITION_ACCOUNTS(X)                                         \
+    X(liquidator, SIGNER | WRITABLE)                                           \
+    X(trader, WRITABLE)                                                        \
+    X(position, WRITABLE)
+
+IX(1, liquidate_position, LIQUIDATE_POSITION_ACCOUNTS,
+   liquidate_position_args_t)
+
 uint64_t open_position(open_position_accounts_t *ctx,
                        open_position_args_t *args, Parameters *params);
+uint64_t liquidate_position(liquidate_position_accounts_t *ctx,
+                            liquidate_position_args_t     *args,
+                            Parameters                    *params);
 
 #endif

@@ -13,6 +13,7 @@ typedef struct {
     uint8_t  state; // 0 = OPEN, 1 = LIQUIDATING, 2 = CLOSED
     uint32_t market_index;
     uint64_t opened_at;
+    uint64_t nonce;
 } PositionState;
 
 #endif
