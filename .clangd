@@ -1,0 +1,10 @@
+CompileFlags:
+  Add:
+    - -I/Users/avhidotsol/Dev/risk-engine/thirdparty/caravel
+    - -I/Users/avhidotsol/Dev/risk-engine/thirdparty/cjson
+  Remove:
+    - --target=sbf
+    - -fPIC
+    - -Oz
+    - -fno-builtin
+    - -fdata-sections

@@ -2,6 +2,6 @@ engine/main
 engine/*.o
 program/build/
 *.o
-compile_commands.json
+**/compile_commands.json
 .DS_Store
 .cache/

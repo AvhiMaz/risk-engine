@@ -1,6 +1,6 @@
-#include "state.h"
-#include <stdint.h>
+#include "perp.h"
 
-uint64_t open_position() {
+uint64_t open_position(open_position_accounts_t *ctx,
+                       open_position_args_t *args, Parameters *params) {
     return SUCCESS;
 }
