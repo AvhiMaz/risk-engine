@@ -1,0 +1,12 @@
+[package]
+name = "perps-tests"
+version = "0.1.0"
+edition = "2021"
+
+[dev-dependencies]
+mollusk-svm = "0.0.8"
+solana-sdk = "2.1"
+
+[[test]]
+name = "open_position"
+path = "open_position.rs"

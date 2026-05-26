@@ -1,6 +1,7 @@
 engine/main
 engine/*.o
 program/build/
+program/tests/target/
 *.o
 **/compile_commands.json
 .DS_Store
