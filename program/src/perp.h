@@ -11,6 +11,7 @@ typedef struct __attribute__((packed)) {
     uint8_t  side;
     uint32_t market_index;
     uint64_t nonce;
+    uint8_t  bump;
 } open_position_args_t;
 
 #define OPEN_POSITION_ACCOUNTS(X)                                              \

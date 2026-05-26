@@ -10,7 +10,7 @@ fn setup_position(mollusk: &Mollusk, trader: &Pubkey) -> (Pubkey, Account) {
     let market_index: u32 = 0;
     let nonce: u64 = 0;
 
-    let (position, _bump) = Pubkey::find_program_address(
+    let (position, bump) = Pubkey::find_program_address(
         &[
             b"position",
             trader.as_ref(),
@@ -27,6 +27,7 @@ fn setup_position(mollusk: &Mollusk, trader: &Pubkey) -> (Pubkey, Account) {
     data.push(0u8);
     data.extend_from_slice(&market_index.to_le_bytes());
     data.extend_from_slice(&nonce.to_le_bytes());
+    data.push(bump);
 
     let ix = Instruction::new_with_bytes(
         PROGRAM_ID,
