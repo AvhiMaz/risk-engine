@@ -8,7 +8,7 @@
 #include <curl/curl.h>
 #include <stdio.h>
 
-#include "../../thirdparty/libbase58/libbase58.h"
+#include "../thirdparty/libbase58/libbase58.h"
 
 #define PROGRAM_ID "44iCEak3d798Gau411YoDisRFNMyZuHM941oZWYfx95U"
 

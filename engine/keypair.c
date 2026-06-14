@@ -1,5 +1,5 @@
 #include "keypair.h"
-#include "../../thirdparty/cjson/cJSON.h"
+#include "../thirdparty/cjson/cJSON.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

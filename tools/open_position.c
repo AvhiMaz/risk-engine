@@ -1,5 +1,5 @@
-#include "../engine/src/keypair.h"
-#include "../engine/src/rpc.h"
+#include "../engine/keypair.h"
+#include "../engine/rpc.h"
 #include "../thirdparty/libbase58/libbase58.h"
 #include <curl/curl.h>
 #include <openssl/bn.h>

@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../thirdparty/cjson/cJSON.h"
-#include "../../thirdparty/libbase58/libbase58.h"
+#include "../thirdparty/cjson/cJSON.h"
+#include "../thirdparty/libbase58/libbase58.h"
 #include "engine.h"
 
 typedef struct {

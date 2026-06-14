@@ -15,7 +15,7 @@ CFLAGS  := --target=sbf -fPIC -Oz -fno-builtin -fdata-sections -I$(PROG_INC)
 LDFLAGS := -z notext -shared --Bdynamic --gc-sections $(PROG_INC)/bpf.ld --entry entrypoint
 
 engine:
-	gcc thirdparty/cjson/*.c thirdparty/libbase58/base58.c engine/src/*.c -o engine/main \
+	gcc thirdparty/cjson/*.c thirdparty/libbase58/base58.c engine/*.c -o engine/main \
 		-lpthread \
 		-I thirdparty/cjson \
 		-I thirdparty/libbase58 \
@@ -29,12 +29,12 @@ engine:
 
 tools:
 	gcc thirdparty/cjson/*.c thirdparty/libbase58/base58.c \
-		engine/src/engine.c engine/src/keypair.c engine/src/rpc.c \
+		engine/engine.c engine/keypair.c engine/rpc.c \
 		tools/open_position.c -o tools/open_position \
 		-lpthread \
 		-I thirdparty/cjson \
 		-I thirdparty/libbase58 \
-		-I engine/src \
+		-I engine \
 		-L/opt/homebrew/opt/openssl@3/lib \
 		-I/opt/homebrew/opt/openssl@3/include \
 		-lssl -lcrypto \
@@ -50,7 +50,7 @@ program/build/%.o: program/src/%.c $(PROG_HDRS)
 	$(CLANG) $(CFLAGS) -c $< -o $@
 
 format:
-	clang-format -i engine/src/*.c engine/src/*.h program/src/*.c program/src/*.h
+	clang-format -i engine/*.c engine/*.h program/src/*.c program/src/*.h
 
 clean:
 	rm -f engine/main
