@@ -5,6 +5,7 @@
 #include "market.h"
 #include "rpc.h"
 #include "scanner.h"
+#include <curl/curl.h>
 #include <stdio.h>
 
 #include "../../thirdparty/libbase58/libbase58.h"
@@ -12,6 +13,8 @@
 #define PROGRAM_ID "44iCEak3d798Gau411YoDisRFNMyZuHM941oZWYfx95U"
 
 int main() {
+    curl_global_init(CURL_GLOBAL_ALL);
+
     RiskEngine engine;
     engine_init(&engine);
 

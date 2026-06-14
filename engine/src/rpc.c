@@ -11,8 +11,8 @@
 
 typedef struct {
     char  *data;
-    size_t cap;
     size_t len;
+    size_t cap;
 } Buffer;
 
 typedef struct {
@@ -67,6 +67,9 @@ static int http_post(const char *body, Buffer *out) {
 
     curl_slist_free_all(hdrs);
     curl_easy_cleanup(curl);
+
+    if (res != CURLE_OK)
+        fprintf(stderr, "curl error: %s\n", curl_easy_strerror(res));
 
     return res == CURLE_OK ? 0 : -1;
 }
@@ -138,6 +141,8 @@ int rpc_get_program_accounts(RiskEngine *engine, const char *program_id) {
         free(resp.data);
         return -1;
     }
+
+    printf("blockhash response: %s\n", resp.data);
 
     cJSON *json = cJSON_Parse(resp.data);
     free(resp.data);
