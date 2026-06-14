@@ -1,6 +1,7 @@
 #ifndef RISK_ENGINE_H
 #define RISK_ENGINE_H
 
+#include "keypair.h"
 #include "market.h"
 #include "position.h"
 #include <pthread.h>
@@ -22,6 +23,9 @@ typedef struct {
     pthread_mutex_t lock;
     pthread_cond_t  price_cond;
     pthread_cond_t  liq_cond;
+    uint8_t         program_id[32];
+    Keypair         liquidator_kp;
+
 } RiskEngine;
 
 void engine_init(RiskEngine *engine);

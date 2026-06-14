@@ -1,4 +1,4 @@
-.PHONY: engine program clean format
+.PHONY: engine program tools clean format
 
 SOLANA_VER := $(shell ls -d $(HOME)/.cache/solana/v*/platform-tools 2>/dev/null | sort -t/ -k7 -V | tail -1 | xargs dirname)
 CLANG      ?= $(SOLANA_VER)/platform-tools/llvm/bin/clang
@@ -15,15 +15,30 @@ CFLAGS  := --target=sbf -fPIC -Oz -fno-builtin -fdata-sections -I$(PROG_INC)
 LDFLAGS := -z notext -shared --Bdynamic --gc-sections $(PROG_INC)/bpf.ld --entry entrypoint
 
 engine:
-	gcc thirdparty/cjson/*.c engine/src/*.c -o engine/main \
+	gcc thirdparty/cjson/*.c thirdparty/libbase58/base58.c engine/src/*.c -o engine/main \
 		-lpthread \
 		-I thirdparty/cjson \
+		-I thirdparty/libbase58 \
 		-L/opt/homebrew/opt/libwebsockets/lib \
 		-I/opt/homebrew/opt/libwebsockets/include \
 		-lwebsockets \
 		-L/opt/homebrew/opt/openssl@3/lib \
 		-I/opt/homebrew/opt/openssl@3/include \
-		-lssl -lcrypto
+		-lssl -lcrypto \
+		-lcurl
+
+tools:
+	gcc thirdparty/cjson/*.c thirdparty/libbase58/base58.c \
+		engine/src/engine.c engine/src/keypair.c engine/src/rpc.c \
+		tools/open_position.c -o tools/open_position \
+		-lpthread \
+		-I thirdparty/cjson \
+		-I thirdparty/libbase58 \
+		-I engine/src \
+		-L/opt/homebrew/opt/openssl@3/lib \
+		-I/opt/homebrew/opt/openssl@3/include \
+		-lssl -lcrypto \
+		-lcurl
 
 program: $(PROG_SO)
 
