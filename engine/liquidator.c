@@ -14,11 +14,11 @@ void *liquidator(void *arg) {
         while (engine->liq_queue_count == 0)
             pthread_cond_wait(&engine->liq_cond, &engine->lock);
 
-        uint32_t idx       = engine->liq_queue[0];
-        Position *pos      = &engine->positions[idx];
-        uint64_t mark_price = engine->markets[pos->market_index].mark_price;
+        uint32_t  idx = engine->liq_queue[0];
+        Position *pos = &engine->positions[idx];
+        uint64_t  mark_price = engine->markets[pos->market_index].mark_price;
 
-        uint8_t pubkey[32];
+        uint8_t   pubkey[32];
         memcpy(pubkey, pos->pubkey, 32);
         pos->state = CLOSED;
 

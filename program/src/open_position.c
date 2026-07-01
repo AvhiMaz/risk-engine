@@ -25,17 +25,19 @@ uint64_t open_position(open_position_accounts_t *ctx,
     get_clock(&clock);
 
     PositionState *state = ACCOUNT_STATE(ctx->position, PositionState);
-    state->entry_price       = args->entry_price;
-    state->size              = args->size;
-    state->margin            = args->margin;
-    state->side              = args->side;
-    state->state             = 0;
-    state->opened_at         = clock.unix_timestamp;
-    state->liquidation_price = (args->side == 0)
-        ? args->entry_price - (args->margin / args->size)
-        : args->entry_price + (args->margin / args->size);
+    state->entry_price = args->entry_price;
+    state->size = args->size;
+    state->margin = args->margin;
+    state->side = args->side;
+    state->state = 0;
+    state->opened_at = clock.unix_timestamp;
+
+    uint64_t factor = (args->side == 0) ? 10000 - args->imr + args->mmr
+                                        : 10000 + args->imr - args->mmr;
+    state->liquidation_price = args->entry_price * factor / 10000;
+    state->mmr = args->mmr;
     state->market_index = args->market_index;
-    state->nonce        = args->nonce;
+    state->nonce = args->nonce;
     pubkey_cpy(&state->trader, ctx->trader->key);
 
     return SUCCESS;

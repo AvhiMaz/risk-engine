@@ -27,6 +27,7 @@ typedef struct {
     uint32_t market_index;
     uint64_t opened_at;
     uint64_t nonce;
+    uint64_t mmr;
 } OnChainPosition;
 
 /*
@@ -183,6 +184,7 @@ int rpc_get_program_accounts(RiskEngine *engine, const char *program_id) {
         pos.side = op->side == 0 ? LONG : SHORT;
         pos.market_index = op->market_index;
         pos.opened_at = op->opened_at;
+        pos.mmr = op->mmr;
         pos.state = OPEN;
         memcpy(pos.trader_id, op->trader, 32);
 

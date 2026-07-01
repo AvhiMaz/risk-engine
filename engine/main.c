@@ -10,7 +10,7 @@
 
 #include "../thirdparty/libbase58/libbase58.h"
 
-#define PROGRAM_ID "44iCEak3d798Gau411YoDisRFNMyZuHM941oZWYfx95U"
+#define PROGRAM_ID "EJ1LFYX1rcpAjXVLptpEUAmehyB4pMbfiUD98r9dfLkZ"
 
 int main() {
     curl_global_init(CURL_GLOBAL_ALL);
@@ -32,8 +32,8 @@ int main() {
     Market sol_perp = {.market_index = 0,
                        .mark_price = 0,
                        .config = {.market_index = 0,
-                                  .initial_margin_rate = 10,
-                                  .maintenance_margin_rate = 5,
+                                  .initial_margin_rate = 1000,
+                                  .maintenance_margin_rate = 500,
                                   .max_leverage = 20}};
     engine_add_market(&engine, &sol_perp);
 
