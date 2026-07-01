@@ -1,4 +1,5 @@
 engine/main
+tools/open_position
 engine/*.o
 program/build/
 program/tests/target/
