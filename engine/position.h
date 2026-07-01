@@ -13,6 +13,7 @@ typedef struct {
     enum Side  side;
     uint64_t   margin;
     uint64_t   liquidation_price;
+    uint64_t   mmr;
     uint8_t    trader_id[32];
     uint8_t    pubkey[32];
     uint32_t   market_index;

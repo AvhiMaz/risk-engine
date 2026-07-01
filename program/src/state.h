@@ -14,6 +14,7 @@ typedef struct {
     uint32_t market_index;
     uint64_t opened_at;
     uint64_t nonce;
+    uint64_t mmr;
 } PositionState;
 
 #endif

@@ -14,15 +14,20 @@ void *scanner(void *arg) {
             Position *pos = &engine->positions[i];
             if (pos->state != OPEN)
                 continue;
-            Market *market = &engine->markets[pos->market_index];
+            Market  *market = &engine->markets[pos->market_index];
 
-            int     liquidate = 0;
-            if (pos->side == LONG &&
-                market->mark_price <= pos->liquidation_price)
-                liquidate = 1;
-            else if (pos->side == SHORT &&
-                     market->mark_price >= pos->liquidation_price)
-                liquidate = 1;
+            uint64_t notional = market->mark_price * pos->size / 10000;
+            uint64_t maint_req = notional * pos->mmr / 10000;
+
+            int64_t  price_diff =
+                (pos->side == LONG)
+                     ? (int64_t)market->mark_price - (int64_t)pos->entry_price
+                     : (int64_t)pos->entry_price - (int64_t)market->mark_price;
+
+            int64_t upnl = price_diff * (int64_t)pos->size / 10000;
+            int64_t eff_margin = (int64_t)pos->margin + upnl;
+
+            int     liquidate = eff_margin < (int64_t)maint_req;
 
             if (liquidate) {
                 pos->state = LIQUIDATING;
